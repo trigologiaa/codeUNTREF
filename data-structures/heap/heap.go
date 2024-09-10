@@ -3,7 +3,6 @@ package heap
 
 import (
 	"errors"
-
 	"github.com/trigologiaa/data-structures/types"
 	"github.com/trigologiaa/data-structures/utils"
 )
@@ -26,7 +25,10 @@ type Heap[T any] struct {
 // Retorna:
 //   - un puntero a un heap binario de mínimos.
 func NewMinHeap[T types.Ordered]() *Heap[T] {
-	return &Heap[T]{compare: utils.Compare[T], elements: make([]T, 0)}
+	return &Heap[T] {
+		compare: utils.Compare[T],
+		elements: make([]T, 0),
+	}
 }
 
 // NewMaxHeap crea un nuevo heap binario de máximos.
@@ -142,19 +144,15 @@ func (m *Heap[T]) downHeap(i int) {
 		left := 2*i + 1
 		right := 2*i + 2
 		smallest := i
-
 		if left < m.Size() && m.compare(m.elements[left], m.elements[smallest]) < 0 {
 			smallest = left
 		}
-
 		if right < m.Size() && m.compare(m.elements[right], m.elements[smallest]) < 0 {
 			smallest = right
 		}
-
 		if smallest == i {
 			break
 		}
-
 		m.elements[i], m.elements[smallest] = m.elements[smallest], m.elements[i]
 		i = smallest
 	}

@@ -6,7 +6,7 @@ import "errors"
 
 // Queue implementa una cola genérica sobre un arreglo dinámico.
 type Queue[T any] struct {
-	data []T
+	data	[]T
 }
 
 // NewQueue crea una nueva cola vacía. O(1)
@@ -15,7 +15,7 @@ type Queue[T any] struct {
 //
 //	q := queue.New[int]() // Crea una nueva cola de enteros.
 func NewQueue[T any]() *Queue[T] {
-	return &Queue[T]{}
+	return &Queue[T] {}
 }
 
 // Enqueue agrega un elemento a la cola. O(1)
@@ -46,7 +46,6 @@ func (q *Queue[T]) Dequeue() (T, error) {
 	}
 	head = q.data[0]
 	q.data = q.data[1:]
-
 	return head, nil
 }
 
@@ -66,7 +65,6 @@ func (q *Queue[T]) Front() (T, error) {
 		return head, errors.New("cola vacía")
 	}
 	head = q.data[0]
-
 	return head, nil
 }
 

@@ -3,12 +3,11 @@ package avltree
 
 import (
 	"errors"
-
 	"github.com/trigologiaa/data-structures/types"
 )
 
 type AVLTree[T types.Ordered] struct {
-	root *AVLNode[T]
+	root	*AVLNode[T]
 }
 
 // NewAVLTree crea un árbol AVL vacío.
@@ -20,7 +19,9 @@ type AVLTree[T types.Ordered] struct {
 // Retorna:
 //   - un puntero a un árbol AVL vacío.
 func NewAVLTree[T types.Ordered]() *AVLTree[T] {
-	return &AVLTree[T]{root: nil}
+	return &AVLTree[T] {
+		root: nil,
+	}
 }
 
 // String devuelve una representación en cadena del árbol AVL.
@@ -117,12 +118,9 @@ func (avl *AVLTree[T]) Search(k T) bool {
 func (avl *AVLTree[T]) FindMin() (T, error) {
 	if avl.root == nil {
 		var emptyValue T
-
 		return emptyValue, errors.New("árbol vacío")
 	}
-
 	minNode := avl.root.findMin()
-
 	return minNode.GetData(), nil
 }
 
@@ -141,12 +139,9 @@ func (avl *AVLTree[T]) FindMin() (T, error) {
 func (avl *AVLTree[T]) FindMax() (T, error) {
 	if avl.root == nil {
 		var emptyValue T
-
 		return emptyValue, errors.New("árbol vacío")
 	}
-
 	maxNode := avl.root.findMax()
-
 	return maxNode.GetData(), nil
 }
 

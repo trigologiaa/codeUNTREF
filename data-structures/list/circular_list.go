@@ -4,8 +4,8 @@ import "fmt"
 
 // CircularList implementa una lista enlazada circular genérica.
 type CircularList[T comparable] struct {
-	head *DoubleLinkedNode[T]
-	size int
+	head	*DoubleLinkedNode[T]
+	size	int
 }
 
 // NewCircularList crea una nueva lista enlazada circular.
@@ -14,7 +14,7 @@ type CircularList[T comparable] struct {
 //
 //	list := NewCircularList[int]() // Crea una nueva lista enlazada circular.
 func NewCircularList[T comparable]() *CircularList[T] {
-	return &CircularList[T]{}
+	return &CircularList[T] {}
 }
 
 // Head devuelve el primer nodo de la lista.
@@ -41,7 +41,6 @@ func (l *CircularList[T]) Tail() *DoubleLinkedNode[T] {
 	if l.size == 0 {
 		return nil
 	}
-
 	return l.head.Prev()
 }
 
@@ -141,7 +140,6 @@ func (l *CircularList[T]) Find(data T) *DoubleLinkedNode[T] {
 	if l.size == 0 {
 		return nil
 	}
-
 	node := l.head
 	for i := 0; i < l.size; i++ {
 		if node.Data() == data {
@@ -149,7 +147,6 @@ func (l *CircularList[T]) Find(data T) *DoubleLinkedNode[T] {
 		}
 		node = node.Next()
 	}
-
 	return nil
 }
 
@@ -162,14 +159,11 @@ func (l *CircularList[T]) RemoveFirst() {
 	if l.size == 0 {
 		return
 	}
-
 	if l.size == 1 {
 		l.head = nil
 		l.size--
-
 		return
 	}
-
 	l.head.Prev().SetNext(l.head.Next())
 	l.head.Next().SetPrev(l.head.Prev())
 	l.head = l.head.Next()
@@ -185,14 +179,11 @@ func (l *CircularList[T]) RemoveLast() {
 	if l.size == 0 {
 		return
 	}
-
 	if l.size == 1 {
 		l.head = nil
 		l.size--
-
 		return
 	}
-
 	l.head.Prev().Prev().SetNext(l.head)
 	l.head.SetPrev(l.head.Prev().Prev())
 	l.size--
@@ -211,13 +202,10 @@ func (l *CircularList[T]) Remove(data T) {
 	if node == nil {
 		return
 	}
-
 	if node == l.head {
 		l.RemoveFirst()
-
 		return
 	}
-
 	node.Prev().SetNext(node.Next())
 	node.Next().SetPrev(node.Prev())
 	l.size--
@@ -235,9 +223,7 @@ func (l *CircularList[T]) String() string {
 	if l.IsEmpty() {
 		return "CircularList: ⇢ [] ⇠"
 	}
-
 	result := "CircularList: ⇢ "
-
 	current := l.Head()
 	for {
 		result += fmt.Sprintf("[%v]", current.Data())
@@ -248,6 +234,5 @@ func (l *CircularList[T]) String() string {
 		current = current.Next()
 	}
 	result += " ⇠"
-
 	return result
 }

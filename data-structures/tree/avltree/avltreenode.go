@@ -9,10 +9,10 @@ import (
 
 // AVLNode es un nodo del árbol AVL, además del dato y los hijos, registra la altura.
 type AVLNode[T types.Ordered] struct {
-	data   T           // dato
-	height int         // altura
-	left   *AVLNode[T] // hijo izquierdo
-	right  *AVLNode[T] // hijo derecho
+	data	T           // dato
+	height	int         // altura
+	left	*AVLNode[T] // hijo izquierdo
+	right	*AVLNode[T]	// hijo derecho
 }
 
 // newAVLNode crea un nuevo nodo AVL con el dato, y los hijos izquierdo y derecho pasados como parámetros.
@@ -25,7 +25,12 @@ type AVLNode[T types.Ordered] struct {
 // Retorna:
 //   - un puntero al nodo creado.
 func newAVLNode[T types.Ordered](data T, left *AVLNode[T], right *AVLNode[T]) *AVLNode[T] {
-	return &AVLNode[T]{left: left, right: right, data: data, height: 0}
+	return &AVLNode[T] {
+		left: left,
+		right: right,
+		data: data,
+		height: 0,
+	}
 }
 
 // GetData retorna el dato del nodo.
@@ -72,7 +77,6 @@ func (n *AVLNode[T]) getHeight() int {
 	if n == nil {
 		return -1
 	}
-
 	return n.height
 }
 
@@ -84,7 +88,6 @@ func (n *AVLNode[T]) getBalance() int {
 	if n == nil {
 		return 0
 	}
-
 	return n.left.getHeight() - n.right.getHeight()
 }
 
@@ -107,16 +110,15 @@ func (n *AVLNode[T]) insert(value T) *AVLNode[T] {
 	}
 	// Primero inserta el nodo como si fuera un BST común
 	switch {
-	case value < n.data:
-		n.left = n.left.insert(value)
-	case value > n.data:
-		n.right = n.right.insert(value)
-	default: // el elemento ya se encuentra en el árbol
-		return n
+		case value < n.data:
+			n.left = n.left.insert(value)
+		case value > n.data:
+			n.right = n.right.insert(value)
+		default: // el elemento ya se encuentra en el árbol
+			return n
 	}
 	// Actualiza la altura del nodo, y si es necesario, aplica rotaciones
 	n.updateHeight()
-
 	return n.applyRotation()
 }
 
@@ -124,15 +126,12 @@ func (n *AVLNode[T]) insert(value T) *AVLNode[T] {
 func (n *AVLNode[T]) rotateRight() *AVLNode[T] {
 	y := n.left   // y es el hijo izquierdo de n
 	t2 := y.right // t2 es el hijo derecho de y
-
 	// reasignamos los punteros
 	y.right = n
 	n.left = t2
-
 	// Actualizamos las alturas
 	n.updateHeight()
 	y.updateHeight()
-
 	return y
 }
 
@@ -140,15 +139,12 @@ func (n *AVLNode[T]) rotateRight() *AVLNode[T] {
 func (n *AVLNode[T]) rotateLeft() *AVLNode[T] {
 	x := n.right // x es el hijo derecho de n
 	t2 := x.left // t2 es el hijo izquierdo de x
-
 	// reasignamos los punteros
 	x.left = n
 	n.right = t2
-
 	// Actualizamos las alturas
 	n.updateHeight()
 	x.updateHeight()
-
 	return x
 }
 
@@ -163,7 +159,6 @@ func (n *AVLNode[T]) remove(value T) *AVLNode[T] {
 	if n == nil {
 		return n
 	}
-
 	// Primero elimina el nodo como si fuera un BST común
 	switch {
 	case value < n.data:
@@ -181,10 +176,8 @@ func (n *AVLNode[T]) remove(value T) *AVLNode[T] {
 		n.data = temp.data
 		n.right = n.right.remove(temp.data)
 	}
-
 	// Actualiza la altura del nodo, y si es necesario, aplica rotaciones
 	n.updateHeight()
-
 	return n.applyRotation()
 }
 
@@ -194,10 +187,8 @@ func (n *AVLNode[T]) remove(value T) *AVLNode[T] {
 //   - un puntero al nodo raiz del sub-arbol, resultante de aplicar las rotaciones.
 func (n *AVLNode[T]) applyRotation() *AVLNode[T] {
 	balance := n.getBalance()
-
 	// Si |balance| > 1, el árbol está desbalanceado
 	// Debemos aplicar rotaciones para balancearlo
-
 	// Desbalanceado a la izquierda -> rotación simple a derecha
 	if balance > 1 {
 		// Si además el hijo izquierdo está desbalanceado a la derecha,
@@ -206,10 +197,8 @@ func (n *AVLNode[T]) applyRotation() *AVLNode[T] {
 		if n.left.getBalance() < 0 {
 			n.left = n.left.rotateLeft()
 		}
-
 		return n.rotateRight()
 	}
-
 	// Desbalanceado a la derecha -> rotación simple a izquierda
 	if balance < -1 {
 		// Si además el hijo derecho está desbalanceado a la izquierda,
@@ -218,10 +207,8 @@ func (n *AVLNode[T]) applyRotation() *AVLNode[T] {
 		if n.right.getBalance() > 0 {
 			n.right = n.right.rotateRight()
 		}
-
 		return n.rotateLeft()
 	}
-
 	return n
 }
 
@@ -233,7 +220,6 @@ func (n *AVLNode[T]) findMin() *AVLNode[T] {
 	if n.left == nil {
 		return n
 	}
-
 	return n.left.findMin()
 }
 
@@ -245,7 +231,6 @@ func (n *AVLNode[T]) findMax() *AVLNode[T] {
 	if n.right == nil {
 		return n
 	}
-
 	return n.right.findMax()
 }
 
@@ -260,15 +245,12 @@ func (n *AVLNode[T]) search(k T) bool {
 	if n == nil {
 		return false
 	}
-
 	if n.data > k {
 		return n.left.search(k)
 	}
-
 	if n.data < k {
 		return n.right.search(k)
 	}
-
 	return true
 }
 
@@ -280,6 +262,5 @@ func (n *AVLNode[T]) inOrder() string {
 	if n == nil {
 		return ""
 	}
-
 	return n.left.inOrder() + " " + n.string() + " " + n.right.inOrder()
 }

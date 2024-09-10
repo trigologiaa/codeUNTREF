@@ -7,9 +7,9 @@ import "fmt"
 // LinkedList se implementa con un nodo que contiene un dato y un puntero al siguiente nodo.
 // Los elementos deben ser de un tipo comparable.
 type LinkedList[T comparable] struct {
-	head *LinkedNode[T]
-	tail *LinkedNode[T]
-	size int
+	head	*LinkedNode[T]
+	tail	*LinkedNode[T]
+	size	int
 }
 
 // NewLinkedList crea una nueva lista vacía.
@@ -18,7 +18,7 @@ type LinkedList[T comparable] struct {
 //
 //	list := list.NewLinkedList[int]() // Crea una nueva lista vacía.
 func NewLinkedList[T comparable]() *LinkedList[T] {
-	return &LinkedList[T]{}
+	return &LinkedList[T] {}
 }
 
 // Head devuelve el primer nodo de la lista.
@@ -118,8 +118,7 @@ func (l *LinkedList[T]) Append(data T) {
 	l.size++
 }
 
-// Find busca un dato en la lista, si lo encuentra devuelve el nodo
-// correspondiente, si no lo encuentra devuelve nil
+// Find busca un dato en la lista, si lo encuentra devuelve el nodo correspondiente, si no lo encuentra devuelve nil.
 //
 // Uso:
 //
@@ -136,7 +135,6 @@ func (l *LinkedList[T]) Find(data T) *LinkedNode[T] {
 			return current
 		}
 	}
-
 	return nil
 }
 
@@ -149,13 +147,10 @@ func (l *LinkedList[T]) RemoveFirst() {
 	if l.IsEmpty() {
 		return
 	}
-
 	l.head = l.head.Next()
-
 	if l.head == nil {
 		l.tail = nil
 	}
-
 	l.size--
 }
 
@@ -168,7 +163,6 @@ func (l *LinkedList[T]) RemoveLast() {
 	if l.IsEmpty() {
 		return
 	}
-
 	if l.Size() == 1 {
 		l.head = nil
 		l.tail = nil
@@ -183,7 +177,7 @@ func (l *LinkedList[T]) RemoveLast() {
 	l.size--
 }
 
-// Remove elimina un la primera aparición de un dato en la lista.
+// Remove elimina la primera aparición de un dato en la lista.
 //
 // Uso:
 //
@@ -193,25 +187,18 @@ func (l *LinkedList[T]) RemoveLast() {
 //   - `data`: el dato a eliminar de la lista.
 func (l *LinkedList[T]) Remove(data T) {
 	node := l.Find(data)
-
 	if node == nil {
 		return
 	}
-
 	if node == l.head {
 		l.RemoveFirst()
-
 		return
 	}
-
 	current := l.Head()
-
 	for current.Next() != node {
 		current = current.Next()
 	}
-
 	current.SetNext(node.Next())
-
 	if node == l.tail {
 		l.tail = current
 	}
@@ -230,9 +217,7 @@ func (l *LinkedList[T]) String() string {
 	if l.IsEmpty() {
 		return "LinkedList: []"
 	}
-
 	result := "LinkedList: "
-
 	current := l.Head()
 	for {
 		result += fmt.Sprintf("[%v]", current.Data())
@@ -242,6 +227,5 @@ func (l *LinkedList[T]) String() string {
 		result += " → "
 		current = current.Next()
 	}
-
 	return result
 }

@@ -4,9 +4,9 @@ import "fmt"
 
 // DoubleLinkedList implementa una lista enlazada doble genérica.
 type DoubleLinkedList[T comparable] struct {
-	head *DoubleLinkedNode[T]
-	tail *DoubleLinkedNode[T]
-	size int
+	head	*DoubleLinkedNode[T]
+	tail	*DoubleLinkedNode[T]
+	size	int
 }
 
 // NewDoubleLinkedList crea una nueva lista vacía.
@@ -15,7 +15,7 @@ type DoubleLinkedList[T comparable] struct {
 //
 //	list := NewDoubleLinkedList[int]() // Crea una nueva lista enlazada doble.
 func NewDoubleLinkedList[T comparable]() *DoubleLinkedList[T] {
-	return &DoubleLinkedList[T]{}
+	return &DoubleLinkedList[T] {}
 }
 
 // Head devuelve el primer nodo de la lista.
@@ -134,7 +134,6 @@ func (l *DoubleLinkedList[T]) Find(data T) *DoubleLinkedNode[T] {
 			return current
 		}
 	}
-
 	return nil
 }
 
@@ -147,10 +146,8 @@ func (l *DoubleLinkedList[T]) RemoveFirst() {
 	if l.IsEmpty() {
 		return
 	}
-
 	l.head = l.head.Next()
 	l.size--
-
 	if l.IsEmpty() {
 		l.tail = nil
 	} else {
@@ -167,15 +164,12 @@ func (l *DoubleLinkedList[T]) RemoveLast() {
 	if l.IsEmpty() {
 		return
 	}
-
 	if l.size == 1 {
 		l.head = nil
 		l.tail = nil
 		l.size = 0
-
 		return
 	}
-
 	l.tail = l.tail.Prev()
 	l.tail.SetNext(nil)
 	l.size--
@@ -188,23 +182,17 @@ func (l *DoubleLinkedList[T]) RemoveLast() {
 //	list.Remove(10) // Elimina la primera aparición del dato 10 en la lista.
 func (l *DoubleLinkedList[T]) Remove(data T) {
 	node := l.Find(data)
-
 	if node == nil {
 		return
 	}
-
 	if node == l.head {
 		l.RemoveFirst()
-
 		return
 	}
-
 	if node == l.tail {
 		l.RemoveLast()
-
 		return
 	}
-
 	node.Prev().SetNext(node.Next())
 	node.Next().SetPrev(node.Prev())
 	l.size--
@@ -222,9 +210,7 @@ func (l *DoubleLinkedList[T]) String() string {
 	if l.IsEmpty() {
 		return "DoubleLinkedList: []"
 	}
-
 	result := "DoubleLinkedList: "
-
 	current := l.Head()
 	for {
 		result += fmt.Sprintf("[%v]", current.Data())
@@ -234,6 +220,5 @@ func (l *DoubleLinkedList[T]) String() string {
 		result += " ↔ "
 		current = current.Next()
 	}
-
 	return result
 }

@@ -2,8 +2,8 @@ package list
 
 // LinkedNode representa un nodo de una lista enlazada simple.
 type LinkedNode[T comparable] struct {
-	data T
-	next *LinkedNode[T]
+	data	T
+	next	*LinkedNode[T]
 }
 
 // NewLinkedListNode crea un nuevo nodo de lista enlazada con el dato especificado.
@@ -15,7 +15,9 @@ type LinkedNode[T comparable] struct {
 // Parámetros:
 //   - `data`: el dato a almacenar en el nodo.
 func NewLinkedListNode[T comparable](data T) *LinkedNode[T] {
-	return &LinkedNode[T]{data: data}
+	return &LinkedNode[T] {
+		data:	data,
+	}
 }
 
 // SetData establece el dato almacenado en el nodo.

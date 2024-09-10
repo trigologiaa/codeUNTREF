@@ -11,7 +11,7 @@ const (
 
 // BitMap implementa un mapa de bits sobre un entero de 32 bits.
 type BitMap struct {
-	bits uint32
+	bits	uint32
 }
 
 // NewBitMap crea un mapa de bits y lo inicializa con todos los bits apagados.
@@ -20,7 +20,9 @@ type BitMap struct {
 //
 //	bm := bitmap.NewBitMap() // Crea un nuevo mapa de bits.
 func NewBitMap() *BitMap {
-	return &BitMap{bits: 0b0}
+	return &BitMap {
+		bits: 0b0,
+	}
 }
 
 // On enciende el bit de la posición indicada.
@@ -38,9 +40,7 @@ func (bm *BitMap) On(pos uint8) error {
 	if isOutOfRange(pos) {
 		return errors.New("posición no válida")
 	}
-
 	bm.bits |= 0b1 << pos
-
 	return nil
 }
 
@@ -59,9 +59,7 @@ func (bm *BitMap) Off(pos uint8) error {
 	if isOutOfRange(pos) {
 		return errors.New("posición no válida")
 	}
-
 	bm.bits &= ^(0b1 << pos)
-
 	return nil
 }
 
@@ -80,11 +78,10 @@ func (bm *BitMap) IsOn(pos uint8) (bool, error) {
 	if isOutOfRange(pos) {
 		return false, errors.New("posición no válida")
 	}
-
-	return bm.bits&(1<<pos) != 0b0, nil
+	return bm.bits & (1 << pos) != 0b0, nil
 }
 
-// GetMap obtiene la representación interna del mapa de bits
+// GetMap obtiene la representación interna del mapa de bits.
 //
 // Uso:
 //

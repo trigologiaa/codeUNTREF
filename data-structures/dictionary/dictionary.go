@@ -19,11 +19,12 @@ type Dictionary[K comparable, V any] struct {
 //
 //	d := dictionary.NewDictionary[int, string]() // Crea un diccionario de enteros a cadenas.
 func NewDictionary[K comparable, V any]() *Dictionary[K, V] {
-	return &Dictionary[K, V]{dict: make(map[K]V)}
+	return &Dictionary[K, V] {
+		dict: make(map[K]V),
+	}
 }
 
-// Put inserta el par (key, value) en el Diccionario. Si la `key` existe, reemplaza
-// el par existente; si no existe, el par es agregado al diccionario.
+// Put inserta el par (key, value) en el Diccionario. Si la `key` existe, reemplaza el par existente; si no existe, el par es agregado al diccionario.
 //
 // Uso:
 //
@@ -37,7 +38,7 @@ func (d *Dictionary[K, V]) Put(key K, value V) {
 	d.dict[key] = value
 }
 
-// Contains verifica si la `key` especificada existe en el diccionario
+// Contains verifica si la `key` especificada existe en el diccionario.
 //
 // Uso:
 //
@@ -54,7 +55,6 @@ func (d *Dictionary[K, V]) Put(key K, value V) {
 //	`true` si la clave existe en el diccionario; `false` en caso contrario.
 func (d *Dictionary[K, V]) Contains(key K) bool {
 	_, exists := d.dict[key]
-
 	return exists
 }
 
@@ -79,7 +79,6 @@ func (d *Dictionary[K, V]) Get(key K) (V, error) {
 	if !exists {
 		return value, errors.New("clave inexistente")
 	}
-
 	return value, nil
 }
 
@@ -109,8 +108,7 @@ func (d *Dictionary[K, V]) Size() int {
 	return len(d.dict)
 }
 
-// Keys devuelve todas las claves del diccionario. Por la naturaleza de los map de Go,
-// las claves no se devuelven en un orden específico. No puede contener duplicados.
+// Keys devuelve todas las claves del diccionario. Por la naturaleza de los map de Go, las claves no se devuelven en un orden específico. No puede contener duplicados.
 //
 // Uso:
 //
@@ -124,12 +122,10 @@ func (d *Dictionary[K, V]) Keys() []K {
 	for key := range d.dict {
 		dictKeys = append(dictKeys, key)
 	}
-
 	return dictKeys
 }
 
-// Values devuelve todos los valores del diccionario. Por la naturaleza de los map de Go,
-// los valores no se devuelven en un orden específico. Puede contener duplicados.
+// Values devuelve todos los valores del diccionario. Por la naturaleza de los map de Go, los valores no se devuelven en un orden específico. Puede contener duplicados.
 //
 // Uso:
 //
@@ -143,7 +139,6 @@ func (d *Dictionary[K, V]) Values() []V {
 	for _, value := range d.dict {
 		dictValues = append(dictValues, value)
 	}
-
 	return dictValues
 }
 
@@ -160,12 +155,10 @@ func (d *Dictionary[K, V]) String() string {
 	if d.Size() == 0 {
 		return "Dictionary: {}"
 	}
-
 	str := "Dictionary: {\n"
 	for key, value := range d.dict {
 		str += fmt.Sprintf("  %v: %v\n", key, value)
 	}
 	str += "}"
-
 	return str
 }

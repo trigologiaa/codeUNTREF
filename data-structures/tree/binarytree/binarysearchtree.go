@@ -4,13 +4,12 @@ import (
 	"errors"
 	"fmt"
 	"strings"
-
 	"github.com/trigologiaa/data-structures/stack"
 	"github.com/trigologiaa/data-structures/types"
 )
 
 type BinarySearchTree[T types.Ordered] struct {
-	root *BinaryNode[T]
+	root	*BinaryNode[T]
 }
 
 // NewBinarySearchTree crea un nuevo BinarySearchTree de tipo Ordered.
@@ -22,7 +21,9 @@ type BinarySearchTree[T types.Ordered] struct {
 // Retorna:
 //   - un puntero a un nuevo BinarySearchTree.
 func NewBinarySearchTree[T types.Ordered]() *BinarySearchTree[T] {
-	return &BinarySearchTree[T]{root: nil}
+	return &BinarySearchTree[T] {
+		root: nil,
+	}
 }
 
 // GetRoot obtiene el nodo raíz del árbol.
@@ -81,11 +82,10 @@ func (bst *BinarySearchTree[T]) inOrderByNode(root *BinaryNode[T]) string {
 	if root == nil {
 		return ""
 	}
-	sb := strings.Builder{}
+	sb := strings.Builder {}
 	sb.WriteString(bst.inOrderByNode(root.left))
 	sb.WriteString(fmt.Sprintf("%v ", root.data))
 	sb.WriteString(bst.inOrderByNode(root.right))
-
 	return sb.String()
 }
 
@@ -119,7 +119,6 @@ func (bst *BinarySearchTree[T]) insertByNode(node *BinaryNode[T], k T) *BinaryNo
 	} else if k > node.data {
 		node.right = bst.insertByNode(node.right, k)
 	}
-
 	return node
 }
 
@@ -140,7 +139,6 @@ func (bst *BinarySearchTree[T]) insertByNode(node *BinaryNode[T], k T) *BinaryNo
 //   - un puntero al nodo encontrado.
 func (bst *BinarySearchTree[T]) Search(k T) bool {
 	node := bst.root
-
 	for node != nil {
 		switch {
 		case k < node.data:
@@ -148,11 +146,9 @@ func (bst *BinarySearchTree[T]) Search(k T) bool {
 		case k > node.data:
 			node = node.right
 		default:
-
 			return true
 		}
 	}
-
 	return false
 }
 
@@ -171,28 +167,24 @@ func (bst *BinarySearchTree[T]) Search(k T) bool {
 func (bst *BinarySearchTree[T]) FindMin() (T, error) {
 	if bst.root == nil {
 		var nullElement T
-
 		return nullElement, errors.New("árbol vacío")
 	}
 	nextLeft := bst.root
 	for nextLeft.left != nil {
 		nextLeft = nextLeft.left
 	}
-
 	return nextLeft.GetData(), nil
 }
 
 func (bst *BinarySearchTree[T]) FindMax() (T, error) {
 	if bst.root == nil {
 		var nullElement T
-
 		return nullElement, errors.New("árbol vacío")
 	}
 	nextRight := bst.root
 	for nextRight.right != nil {
 		nextRight = nextRight.right
 	}
-
 	return nextRight.GetData(), nil
 }
 
@@ -243,7 +235,6 @@ func (bst *BinarySearchTree[T]) removeByNode(root *BinaryNode[T], k T) *BinaryNo
 		root.data = temp.data
 		root.left = bst.removeByNode(root.left, temp.data)
 	}
-
 	return root
 }
 
@@ -304,10 +295,11 @@ func (bst *BinarySearchTree[T]) Iterator() types.Iterator[T] {
 // Retorna:
 //   - un Iterator.
 func newBinarySearchTreeIterator[T types.Ordered](bst *BinarySearchTree[T]) types.Iterator[T] {
-	it := &binarySearchTreeIterator[T]{internalStack: stack.NewStack[*BinaryNode[T]]()}
+	it := &binarySearchTreeIterator[T] {
+		internalStack: stack.NewStack[*BinaryNode[T]](),
+	}
 	if bst.root != nil {
 		it.pushLeftNodes(bst.root)
 	}
-
 	return it
 }

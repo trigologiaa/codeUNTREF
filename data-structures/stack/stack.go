@@ -7,7 +7,7 @@ import "errors"
 // Stack proporciona una pila cuyos elementos son de un tipo genérico.
 // La implementación se basa en un arreglo dinámico.
 type Stack[T any] struct {
-	data []T
+	data	[]T
 }
 
 // NewStack crea una nueva pila vacía.
@@ -16,7 +16,7 @@ type Stack[T any] struct {
 //
 //	s := stack.New[int]() // Crea una pila de enteros.
 func NewStack[T any]() *Stack[T] {
-	return &Stack[T]{}
+	return &Stack[T] {}
 }
 
 // Push agrega un elemento a la pila.
@@ -43,9 +43,8 @@ func (s *Stack[T]) Pop() (T, error) {
 	if s.IsEmpty() {
 		return x, errors.New("pila vacía")
 	}
-	x = s.data[len(s.data)-1]
-	s.data = s.data[:len(s.data)-1]
-
+	x = s.data[len(s.data) - 1]
+	s.data = s.data[:len(s.data) - 1]
 	return x, nil
 }
 
@@ -64,8 +63,7 @@ func (s *Stack[T]) Top() (T, error) {
 	if s.IsEmpty() {
 		return x, errors.New("pila vacía")
 	}
-	x = s.data[len(s.data)-1]
-
+	x = s.data[len(s.data) - 1]
 	return x, nil
 }
 
